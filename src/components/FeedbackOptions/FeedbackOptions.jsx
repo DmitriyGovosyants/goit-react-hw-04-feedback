@@ -1,30 +1,23 @@
 import PropTypes from 'prop-types';
 import { Controls, ControlsItem, Button } from './FeedbackOptions.styled';
 
-export const FeedbackOptions = ({ onSetGood, onSetNeutral, onSetBad }) => {
+export const FeedbackOptions = ({ options, onIncrement }) => {
   return (
     <Controls>
-      <ControlsItem>
-        <Button type="button" onClick={onSetGood}>
-          good
-        </Button>
-      </ControlsItem>
-      <ControlsItem>
-        <Button type="button" onClick={onSetNeutral}>
-          neutral
-        </Button>
-      </ControlsItem>
-      <ControlsItem>
-        <Button type="button" onClick={onSetBad}>
-          bad
-        </Button>
-      </ControlsItem>
+      {options.map(option => {
+        return (
+          <ControlsItem key={option}>
+            <Button type="button" onClick={() => onIncrement(option)}>
+              {option}
+            </Button>
+          </ControlsItem>
+        );
+      })}
     </Controls>
   );
 };
 
 FeedbackOptions.propTypes = {
-  onSetGood: PropTypes.func.isRequired,
-  onSetNeutral: PropTypes.func.isRequired,
-  onSetBad: PropTypes.func.isRequired,
+  options: PropTypes.array.isRequired,
+  onIncrement: PropTypes.func.isRequired,
 };

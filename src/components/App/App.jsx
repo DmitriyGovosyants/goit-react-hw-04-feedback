@@ -8,29 +8,37 @@ export const App = () => {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-  const handleGoodIncrement = () => {
-    setGood(s => s + 1);
-  };
+  const total = countTotalFeedback(good, neutral, bad);
+  const positive = countPositiveFeedbackPercentage(total, good);
 
-  const handleNeutralIncrement = () => {
-    setNeutral(s => s + 1);
-  };
+  const feedbackData = ['good', 'neutral', 'bad'];
 
-  const handleBadIncrement = () => {
-    setBad(s => s + 1);
-  };
+  const handleIncrement = option => {
+    switch (option) {
+      case 'good':
+        setGood(s => s + 1);
+        break;
 
-  const total = () => countTotalFeedback(good, neutral, bad);
-  const positive = () => countPositiveFeedbackPercentage(total(), good);
+      case 'neutral':
+        setNeutral(s => s + 1);
+        break;
+
+      case 'bad':
+        setBad(s => s + 1);
+        break;
+
+      default:
+        return;
+    }
+  };
 
   return (
     <Page>
       <Container>
         <Section title="Please leave feedback">
           <FeedbackOptions
-            onSetGood={handleGoodIncrement}
-            onSetNeutral={handleNeutralIncrement}
-            onSetBad={handleBadIncrement}
+            options={feedbackData}
+            onIncrement={handleIncrement}
           />
         </Section>
         <Section title="Statistics">
@@ -38,8 +46,8 @@ export const App = () => {
             good={good}
             neutral={neutral}
             bad={bad}
-            total={total()}
-            positivePercentage={positive()}
+            total={total}
+            positivePercentage={positive}
           />
         </Section>
       </Container>
